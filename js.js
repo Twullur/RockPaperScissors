@@ -1,10 +1,33 @@
 
-
 // create empty variables userChoice, computerChoice, userScore, computerScore
+let userChoice, computerChoice, userScore, computerScore;
 
-// function playRound () = loop 5 times
-    // getuserchoice = Prompt user for rock, paper, or scissors and store as variable 'userChoice'
-    // get compterChoice = generate computer random choice and store as variable 'computerChoice'
+// getuserchoice = Prompt user for rock, paper, or scissors and store as variable 'userChoice'
+function getUserChoice() {
+    userChoice = prompt("Type your choice: Rock, Paper, or Scissors");
+    userChoice = userChoice.toUpperCase(); // make the choice case insensitive by wrapping it in toUpperCase
+}
+
+// function getComputerChoice = generate computer random choice and store as variable 'computerChoice'
+function getComputerChoice () {
+    let choicePicker = Math.floor(Math.random() * 3 + 1);
+    if (choicePicker === 1) {
+        computerChoice = "ROCK";
+    } else if (choicePicker === 2) {
+        computerChoice = "PAPER";
+    } else computerChoice = "SCISSORS";
+}
+
+// function playRound () to compare the results and decide the winner
+function playRound(userChoice,computerChoice) {
+    //  
+
+    
+
+
+
+
+    // 
     // switch
         // user --> rock and computer --> paper OR
         // user --> paper and computer --> scissors OR
@@ -23,6 +46,11 @@
         // user --> scissors and computer --> scissors 
         // then console log TIE
 
+        // show userScore and ComputerScore
+
+}
+
+// loop playRound 5 times
     
 // if userscore > computerscore, YOU WIN
     // if userScore < computer score, YOU LOSE
