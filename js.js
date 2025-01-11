@@ -77,13 +77,11 @@ for (let i = 1; i <= 5; i++) {
     // if userScore < computer score, YOU LOSE
     // else say TIE
 
-
-
  if (userScore > computerScore) {
     console.log("Congratulations! You beat the computer!");
  } else if (userScore < computerScore) {
     console.log("You Lose! The computer beat you!");
- } else ("It's a Tie!")
+ } else console.log("It's a Tie!");
  console.log(`FINAL RESULTS>>> Your Score: ${userScore}, Computer Score: ${computerScore}`)
 
 // show userscore and computerscore
