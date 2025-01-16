@@ -1,17 +1,49 @@
 
 // create empty variables userChoice, computerChoice, userScore, computerScore
-let userChoice, computerChoice, userScore, computerScore;
+let userChoice, computerChoice, userScore, computerScore, roundsPlayed;
+    userScore = 0;
+    computerScore = 0;
+    roundsPlayed = 0;
 
-userScore = 0;
-computerScore = 0;
+let roundChoices = document.createElement("div");
+let roundResult = document.createElement("div");
+let scores = document.createElement("div");
+let finalStanding = document.createElement("div");
 
-// getuserchoice = Prompt user for rock, paper, or scissors and store as variable 'userChoice'
-function getUserChoice() {
-    userChoice = prompt("Type your choice: Rock, Paper, or Scissors");
-    userChoice = userChoice.toUpperCase(); // make the choice case insensitive by wrapping it in toUpperCase
-}
+let choices = document.querySelectorAll("#choices > button");
+let results = document.querySelector("#results");
 
-// function getComputerChoice = generate computer random choice and store as variable 'computerChoice'
+
+choices.forEach((button) => {
+    button.addEventListener("click", () => {
+        
+        userChoice = button.id;
+        userChoice = userChoice.toUpperCase(); // make the choice case insensitive by wrapping it in toUpperCase
+
+        getComputerChoice();
+        
+        roundResult.textContent = "";
+        playRound(userChoice,computerChoice);  
+        
+        scores.textContent = "";
+        roundsPlayed++;
+        scores.textContent += ` Your Score: ${userScore}, Computer Score: ${computerScore}, Rounds Played: ${roundsPlayed}`;        
+        
+
+        if (roundsPlayed === 5) {
+            finalResults();
+            restartGame(); 
+        } else if (roundsPlayed === 1) {
+            results.appendChild(finalStanding);
+            results.removeChild(finalStanding);
+        }     
+              
+        // console.log(`Your Score: ${userScore}, Computer Score: ${computerScore}, Rounds Played: ${roundsPlayed}`);
+    })
+})
+
+
+// function getComputerChoice > generate computer random choice and store as variable 'computerChoice'
 function getComputerChoice () {
     let choicePicker = Math.floor(Math.random() * 3 + 1);
     if (choicePicker === 1) {
@@ -21,67 +53,43 @@ function getComputerChoice () {
     } else computerChoice = "SCISSORS";
 }
 
-// function playRound () to compare the results and decide the winner
-function playRound(userChoice,computerChoice) {
-    // if statement
-    // // user --> rock and computer --> paper OR
-        // user --> paper and computer --> scissors OR
-        // user --> scissors and computer --> rock 
-        // then console log YOU LOSE computerChoice beats userChoice
-        // computer score ++
 
+
+// function playRound () to compare the results and show the winner
+function playRound(userChoice,computerChoice) { 
     if (
         (userChoice == "ROCK" && computerChoice == "PAPER") ||
         (userChoice == "PAPER" && computerChoice == "SCISSORS") ||
         (userChoice == "SCISSORS" && computerChoice == "ROCK")
-    ) {console.log(`You lose! ${computerChoice} beats ${userChoice}`);
+    ) {roundResult.textContent=`You lose! ${computerChoice} beats ${userChoice}`;
         computerScore++;
-    }
-        // else if
-        // user --> rock and computer --> scissors OR
-        // user --> scissors and computer --> paper OR
-        // user --> paper and computer --> rock 
-        // then console log YOU WIN userChoice beats computerChoice
-        // user score ++
-
-    else if (
-        (userChoice == "ROCK" && computerChoice == "SCISSORS") ||
-        (userChoice == "PAPER" && computerChoice == "ROCK") ||
-        (userChoice == "SCISSORS" && computerChoice == "PAPER")
-    ) {console.log(`You win! ${userChoice} beats ${computerChoice}`);
+    } else if (userChoice === computerChoice) {
+        roundResult.textContent = "TIE!"
+    } else {
+        roundResult.textContent = `You win! ${userChoice} beats ${computerChoice}`;
         userScore++;
+    };
+    
+    roundChoices.textContent=`Your choice: ${userChoice}, the computer's choice: ${computerChoice}`;
+
+    results.appendChild(roundChoices);
+    results.appendChild(roundResult);
+    results.appendChild(scores)
 }
 
-        // else 
-        // user --> rock and computer --> rock OR
-        // user --> paper and compuer --> paper OR 
-        // user --> scissors and computer --> scissors 
-        // then console log TIE
-    else console.log("TIE!")
-
-
-
+function restartGame () {
+    userScore = 0;
+    computerScore = 0;
+    roundsPlayed = 0;
 }
 
-// loop getUserChoice, getComputer Choice, and playRound 5 times
-    // show userScore and ComputerScore
-for (let i = 1; i <= 5; i++) {   
-    getUserChoice();
-    getComputerChoice();
-    console.log(`Computer choice: ${computerChoice}`);
-    playRound(userChoice,computerChoice);
-    console.log(`Your Score: ${userScore}, Computer Score: ${computerScore}`);
- }
 
-// if userscore > computerscore, YOU WIN
-    // if userScore < computer score, YOU LOSE
-    // else say TIE
-
- if (userScore > computerScore) {
-    console.log("Congratulations! You beat the computer!");
- } else if (userScore < computerScore) {
-    console.log("You Lose! The computer beat you!");
- } else console.log("It's a Tie!");
- console.log(`FINAL RESULTS>>> Your Score: ${userScore}, Computer Score: ${computerScore}`)
-
-// show userscore and computerscore
+function finalResults () {
+    finalStanding.textContent = "Final Results: "
+    if (computerScore === userScore) {
+        finalStanding.textContent += "It's a Tie!";
+    } else if (computerScore > userScore) {
+        finalStanding.textContent += "You Lose! The computer beat you!";
+    } else finalStanding.textContent += "You Win! You beat the computer!";
+    results.appendChild(finalStanding);
+}
